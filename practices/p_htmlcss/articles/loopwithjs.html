@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head  lang="en">
+   	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="keywords" content="loop">
+	<title>js+css实现图片轮播</title>
+	<link rel="stylesheet" href="../css/common.css" type="text/css">
+  <link rel="icon" type="image/jpg" href="../images/logo.jpg">
+  
+</head>
+<body>
+    <main id="body_wrapper">
+     <!-- <header class="header clearfix">
+        <div class="menu">
+            <a href="javascript:;" class="icon-icon_menu"></a>
+        </div>
+        <div class="menu_wrapper">
+            <nav class="nav">
+                <li><a class="resume" href="#" >关于</a></li>
+                <li><a href="#content">小型作品</a></li>
+                <li><a href="#">读书笔记</a></li>
+                <li><a href="#">点滴生活</a></li>  
+            </nav>
+        </div>
+        <div class="down">
+            <a href="#content" class="icon-arrow2_down"></a>
+        </div>
+    </header> -->
+       <div class="wrap">
+       	  <div id = "box" class="box">
+       	  	<ul class="imgs">
+       	  		<li class="img-li-left">
+       	  			<a href="javascript:" target="_blank" >
+       	  				<img src="../images/01.jpg" alt="no.01">
+       	  			</a>
+       	  		</li>
+       	  		<li class="img-li-left">
+       	  			<a href="javascript:" target="_blank" >
+       	  				<img src="../images/02.jpg" alt="no.01">
+       	  			</a>
+       	  		</li>
+       	  		<li class="img-li-left">
+       	  			<a href="javascript:" target="_blank" >
+       	  				<img src="../images/03.jpg" alt="no.01">
+       	  			</a>
+       	  		</li>
+       	  		<li class="img-li-left">
+       	  			<a href="javascript:" target="_blank" >
+       	  				<img src="../images/04.jpg" alt="no.01">
+       	  			</a>
+       	  		</li>
+       	  		<li class="img-li-left">
+       	  			<a href="javascript:" target="_blank" >
+       	  				<img src="../images/05.jpeg" alt="no.01">
+       	  			</a>
+       	  		</li>
+       	  	</ul>
+       	  	<div  id = "imgs-ico" class="imgs-ico-box">
+       	  		<a class="active"></a>
+       	  		<a class=""></a>
+       	  		<a class=""></a>
+       	  		<a class=""></a>
+       	  		<a class=""></a>
+       	  	</div>
+       	  	<div class="imgs-btn">
+       	  		<a id="prev" class="imgs-btn-left"></a>
+       	  		<a id="next" class="imgs-btn-right"></a>
+       	  	</div>
+       	  </div>
+       </div>
+    	
+    </main>
+	<script type="text/javascript">
+      (function(){
+           var doc = document;
+           var box = document.getElementById('box'),
+               ul = box.getElementsByTagName('ul')[0];
+               lis = doc.getElementsByTagName('li'),
+               imgs = doc.getElementsByTagName('img'),
+               prev = doc.getElementById('prev'),
+               next = doc.getElementById('next'),
+               icos = doc.getElementById('imgs-ico').getElementsByTagName('a'),
+               len = lis.length ,
+               timer = null , 
+               nowIndex = 0 ,
+               li_w = 0 ;
+            imgs[0].onload = function(){
+                  li_w = this.offsetWidth;
+            }
+           function auto(){
+            next.onclick();
+           }
+            timer = setInterval(auto, 3000);
+            next.onclick = function(){
+                  if (nowIndex < len -1 ) {
+                        nowIndex ++ ;
+                  }else{
+                        nowIndex = 0;
+                        ul.style.left = 0 ;
+                  }
+                  scroll();
+            }
+            prev.onclick = function(){
+                  if (nowIndex > 0) {
+                        nowIndex -- ;
+                  } else{
+                      nowIndex = len -1 ;
+                      ul.style.left = - (li_w * nowIndex) + 'px';
+                  }
+                  scroll();
+            }
+            box.onmouseover = function(){
+                  clearInterval(timer);
+            }
+            box.onmouseout = function(){
+                  timer = setInterval(auto,3000);
+            }
+            function scroll(){
+                  ani(ul,'left',-(li_w * nowIndex)); 
+                  tab() ; // 
+            }
+            /* for  stabble */
+            function ani( obj, attr,target){  
+                  obj.timer &&  clearInterval(obj.timer) ;
+                  obj.style[attr] = target + "px";
+                  obj.timer = setInterval(function(){
+                        var stop = true;
+                        var cur = parseInt(css(obj,attr));
+                        var speed = (target - cur) / 2000 ;
+                        speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed) ;
+                        if (cur != target) {
+                              stop = false;
+                              cur += speed;
+                              obj.style[attr] = cur + 'px' ;
+                        }
+                        if (stop) {
+                              clearInterval(obj.timer) ;
+                              obj.timer = null ;
+                        }
+
+                  },500)
+            }
+            /* for the ico  */
+            function tab(){
+                  for (var i = 0; i < icos.length; i++) {
+                        icos[i].className = "";
+                  }
+                  icos[nowIndex % 5].className = "active";
+            }
+            /* get the ele's attr value  */
+            function css(obj,attr){
+                if (obj.currentStyle) {
+                  return obj.currentStyle[attr] ;
+                } else{
+                  return  getComputedStyle(obj,false)[attr];
+                }
+            }
+          
+
+      })()
+      </script>
+</body>
+</html>
+<!-- git remote add origin https://github.com/xiaoyan-hou/houqingyuan.github.io.git
+git push -u origin master -->
