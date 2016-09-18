@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>元素居中测试</title>
+	<style type="text/css" media="screen">
+		.parent{
+			border:solid 2px blue;
+			margin-bottom: 10px;
+		}
+		.center{
+			border:solid 2px purple;
+			/*height: 100px;*/
+			/*width: 120px;*/
+		}
+		.parent1 {
+			text-align: center;
+			height: 100px;
+		}
+		.parent2{
+			/*position: absolute;*/
+			position: relative;
+			height: 400px;
+			width: 400px;
+			/*float:left;*/
+			/*top: 20px;*/
+			/*left:20px;*/
+		}
+		.center2{
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			/*margin-top: -50%;*/
+			/*margin-left: -50%;*/
+			-webkit-transform: translate(-50%,-50%);
+			transform: translate(-50%,-50%);
+		}
+		.parent3{
+			/*margin: 20px auto;*/
+			display: table-cell;
+			vertical-align: middle;
+			width: 1600px;
+		    height: 100px;
+			/*text-align: center;*/
+		}
+		.parent4{
+			width: 1600px;
+			height: 100px;
+		}
+		.parent4wrap{
+			position: relative;
+			float: left;
+			left: 50%;
+			top:50%;
+			clear: both;
+		}
+		.center4{
+			position: relative;
+			left: -50%;
+			/*top: 50%;*/
+			/*border: dotted 1px red;*/
+		}
+		.center5{
+			float: left;
+			position: relative;
+			left: 50%;
+			top: 50%;
+			-webkit-transform:translate(-50%,-50%);
+		}
+		.parent6{
+			height: 150px;
+		}
+		.center6{
+			margin:  auto;
+			width: 200px;
+			/*height: 50px;*/
+			text-align: center;
+		}
+		.center7{
+			position: absolute;
+			left: 0;
+			right: 0;
+			top:0;
+			bottom: 0; 
+			margin: auto;
+			width: 200px;
+			height: 100px;
+			word-break: break-all;
+		}
+		.parent8{
+			display: flex;
+			justify-content: center;
+			height: 100px;
+		}
+		.parent9{
+			height: 30px; 
+			text-align: center;
+
+		}
+		.center9{
+			line-height: 30px;
+		}
+	</style>
+</head>
+<body>
+	<h2>使元素在父元素中居中的方法和效果</h2>
+	<!-- <h3>一，元素未知高宽</h3> -->
+	<h4>下面两种方法只能实现水平居中</h4>
+	<div class="parent parent1">
+		<span class="center">测试1，我是inline，文本元素 <br>只要父元素设置text-align：center就可以了</span>		
+	</div>
+	<div class="parent6 parent">
+		<div class="center center6">测试6， i am block ,static,使用width+margin:auto水平居中，不能实现垂直居中，文字若要居中，需text-align：center </div>
+	</div>
+	<h4>下面1种方法实现垂直居中</h4>
+	    <div class="parent9 parent">
+	    	<span class="center center9">单行文字使用line-height 设置为父容器高度，只能单行,配合text-align可实现垂直水平居中</span>
+	    </div>
+	<h4>下面5种方法可以实现水平垂直居中</h4>
+	<div class="parent parent2">
+		<div  class="center center2"> 测试2，i am block ,absolute+ margin/transform,使用margin负值需要知道元素本身宽高，transform不需要知道元素宽高；
+		但是元素使用了absolute之后，会脱离文档流，父元素为float或static定位时，父元素不会被撑开，元素以body定位，在body中水平垂直居中；父元素为relative且未定义宽高的时候，要居中元素会以父元素为水平线居中，不能在父元素里居中，父元素为absolute且未定义宽高的时候，无法居中。当父元素为relative或absolute，定义宽高，可以实现垂直水平居中</div>
+	</div>
+	<div class="parent parent3">
+		<div class="center center3" >测试3，我是block，static， 父元素display: table-ceil +　vertical:middle，父元素设置宽高,这只能使block元素居中，若父元素再加text-align，则可使inline元素居中；若父元素不设置宽高，父元素由子元素内容撑开，无谓居中；</div>	   
+	</div>
+	<div class="parent parent4">
+	<div class="parent4wrap">
+	    <div class="center center4"> 测试4，I am block，relative ;增加一个包裹元素relative+ float + left + 本身relative+ left -50%；可以在父元素中居中，但是父元素最好设置宽高，否则无法撑开大小，元素会在body中居中</div>
+	</div>
+	</div>
+	<div class="parent parent2">
+		<div class="center center5">测试5，i am blcok + float,父元素设置通2，自身float+position：relative+ top/left:50% + translate/margin(margin需要知道自身宽高) </div>
+	</div>
+	
+	<div class="parent2 parent">
+		<div class="center7 center" >测试7， 自身设置block+ absolute + margin :auto+left&right&top&bottom：0；父元素设置同测试2中父元素情况</div>
+	</div>
+	<div class="parent parent8 ">
+		<div class="center center8" style="position: relative;">测试8.使用css3的flex布局，父元素设置为display：flex；justify:center;自身元素可设置absolute，relative，float，只要不作死的利用top，left等进行定位就可以；</div>
+	</div>
+	<p>
+	    总结，以上除了第六种方法均可以实现未知高宽元素的水平居中,当然定义了宽高，也可以实现居中，但是里面的内容不能可能会溢出，需要小心设置宽高才能达到预期效果；其中情况2,3,4,5,7可以使元素垂直水平居中；
+	</p>
+</body>
+</html>
