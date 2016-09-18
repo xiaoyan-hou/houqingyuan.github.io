@@ -27,6 +27,17 @@ img{
     background: #31b5bd;
     color: white;
 }
+.logoleft{
+    float: left;
+    /*position: relative;*/
+    /*top: 50%;*/
+    line-height: 80px;
+    margin-left: 10px;
+    /*left: 50%;*/
+    font-family: "Forum", sans-serif;
+    font-size: 1.5em;
+    color: white;
+}
 .index_header .header,.header{
     /*background-image: url(../images/bg_sky/1.png);*/
     background-size:cover;
